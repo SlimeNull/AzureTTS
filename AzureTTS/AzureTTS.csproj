@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Page Remove="FluentDesignResources.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+    <PackageReference Include="EleCho.WpfSuite" Version="0.4.0" />
+    <PackageReference Include="Microsoft.CognitiveServices.Speech" Version="1.37.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="FluentDesignResources.xaml" />
+  </ItemGroup>
+
+</Project>

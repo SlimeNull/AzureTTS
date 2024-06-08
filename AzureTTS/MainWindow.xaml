@@ -1,0 +1,105 @@
+﻿<Window x:Class="AzureTTS.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ws="https://schemas.elecho.dev/wpfsuite"
+        xmlns:local="clr-namespace:AzureTTS"
+        mc:Ignorable="d"
+        Background="Transparent"
+        Title="MainWindow" Height="500" Width="550"
+        d:Background="White"
+        d:DataContext="{d:DesignInstance Type=local:MainWindow}">
+    <Window.Resources>
+        <ws:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </Window.Resources>
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome GlassFrameThickness="-1"/>
+    </WindowChrome.WindowChrome>
+
+    <DockPanel>
+        <Grid DockPanel.Dock="Top"
+              Background="Transparent"
+              MouseDown="Grid_MouseDown">
+            <TextBlock Text="Azure TTS Tool"
+                       FontSize="26"
+                       Margin="24 8 0 0"/>
+        </Grid>
+        <ws:ScrollViewer ws:StylusTouchDevice.Simulate="True">
+            <ws:StackPanel Margin="28 12 28 28" Spacing="8">
+                <ws:TextBox Text="{Binding TextToSpeak}"
+                            FontSize="14"
+                            AcceptsReturn="True"
+                            MinHeight="100"
+                            Placeholder="Input some text"
+                            Padding="4 3"/>
+
+                <ws:GroupBox Header="Control">
+                    <ws:StackPanel Margin="4"
+                                   Spacing="8">
+
+                        <ws:StackPanel Orientation="Horizontal"
+                                       Spacing="8">
+                            <ws:Button Content="Play"
+                                       Command="{Binding PlayCommand}"/>
+                            <ws:Button Content="Stop"
+                                       Command="{Binding StopCommand}"
+                                       Visibility="{Binding PlayCommand.IsRunning,Mode=OneWay,Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                            <ws:Button Content="Download"
+                                       Command="{Binding DownloadCommand}"/>
+                        </ws:StackPanel>
+
+                        <ws:StackPanel>
+                            <TextBlock Text="Voice:"/>
+                            <ws:FlexPanel MainSpacing="4">
+                                <ws:ComboBox ItemsSource="{Binding AllLocales}"
+                                             SelectedItem="{Binding SelectedLocale}">
+                                    <ws:ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding}"/>
+                                        </DataTemplate>
+                                    </ws:ComboBox.ItemTemplate>
+                                </ws:ComboBox>
+                                <ws:ComboBox ws:FlexPanel.Grow="1"
+                                             ItemsSource="{Binding ShownVoices}"
+                                             SelectedItem="{Binding SelectedVoice}">
+                                    <ws:ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding ShortName}"/>
+                                        </DataTemplate>
+                                    </ws:ComboBox.ItemTemplate>
+                                </ws:ComboBox>
+                                <ws:Button Content="Refresh"
+                                           Command="{Binding GetVoicesCommand}"/>
+                            </ws:FlexPanel>
+                        </ws:StackPanel>
+
+                        <ws:CheckBox Content="Auto generate file name"
+                                     IsChecked="{Binding AutoGenerateFileName}"/>
+                        <ws:CheckBox Content="Open file location after downloading"
+                                     IsChecked="{Binding AutoOpenFileFolderAfterDownloading}"/>
+                    </ws:StackPanel>
+                </ws:GroupBox>
+
+                <ws:GroupBox Header="Azure options"
+                             Margin="0 8 0 0">
+                    <ws:StackPanel Margin="4"
+                                   Spacing="8">
+                        <StackPanel>
+                            <TextBlock Text="Speech key"/>
+                            <ws:TextBox Text="{Binding SpeechKey}"
+                                        Placeholder="Input your speech key"/>
+                        </StackPanel>
+
+                        <StackPanel>
+                            <TextBlock Text="Speech region"/>
+                            <ws:TextBox Text="{Binding SpeechRegion}"
+                                        Placeholder="Input your speech region"/>
+                        </StackPanel>
+                    </ws:StackPanel>
+                </ws:GroupBox>
+            </ws:StackPanel>
+        </ws:ScrollViewer>
+    </DockPanel>
+</Window>
