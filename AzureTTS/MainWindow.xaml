@@ -9,7 +9,8 @@
         Background="Transparent"
         Title="MainWindow" Height="500" Width="550"
         d:Background="White"
-        d:DataContext="{d:DesignInstance Type=local:MainWindow}">
+        d:DataContext="{d:DesignInstance Type=local:MainWindow}"
+        Loaded="Window_Loaded">
     <Window.Resources>
         <ws:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </Window.Resources>
@@ -76,9 +77,9 @@
                         </ws:StackPanel>
 
                         <ws:CheckBox Content="Auto generate file name"
-                                     IsChecked="{Binding AutoGenerateFileName}"/>
+                                     IsChecked="{Binding AppConfig.AutoGenerateFileName}"/>
                         <ws:CheckBox Content="Open file location after downloading"
-                                     IsChecked="{Binding AutoOpenFileFolderAfterDownloading}"/>
+                                     IsChecked="{Binding AppConfig.AutoOpenFileFolderAfterDownloading}"/>
                     </ws:StackPanel>
                 </ws:GroupBox>
 
@@ -88,13 +89,13 @@
                                    Spacing="8">
                         <StackPanel>
                             <TextBlock Text="Speech key"/>
-                            <ws:TextBox Text="{Binding SpeechKey}"
+                            <ws:TextBox Text="{Binding AppConfig.SpeechKey}"
                                         Placeholder="Input your speech key"/>
                         </StackPanel>
 
                         <StackPanel>
                             <TextBlock Text="Speech region"/>
-                            <ws:TextBox Text="{Binding SpeechRegion}"
+                            <ws:TextBox Text="{Binding AppConfig.SpeechRegion}"
                                         Placeholder="Input your speech region"/>
                         </StackPanel>
                     </ws:StackPanel>
