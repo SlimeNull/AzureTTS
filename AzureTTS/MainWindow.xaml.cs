@@ -77,7 +77,8 @@ public partial class MainWindow : Window
                 SelectedLocale.Culture is null)
                 return AllVoices;
 
-            return AllVoices.Where(voice => voice.Locale == SelectedLocale.Culture.ToString());
+            var selectedLocale = SelectedLocale.Culture.ToString();
+            return AllVoices.Where(voice => voice.Locale.Equals(selectedLocale, StringComparison.OrdinalIgnoreCase));
         }
     }
 
