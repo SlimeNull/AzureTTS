@@ -15,6 +15,9 @@ public partial class AppConfig : ObservableObject
     [ObservableProperty] 
     private string _speechRegion = string.Empty;
 
+    [ObservableProperty]
+    private string _saveTo = string.Empty;
+
     [ObservableProperty] 
     private bool _autoGenerateFileName = false;
 

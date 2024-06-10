@@ -131,6 +131,12 @@ public partial class MainWindow : Window
     [RelayCommand]
     public async Task Download()
     {
+        if (!string.IsNullOrWhiteSpace(AppConfig.SaveTo) && !System.IO.Path.Exists(AppConfig.SaveTo))
+        {
+            MessageBox.Show("Invalid output folder path", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            return;
+        }
+
         try
         {
             string? outputFileName;
@@ -138,6 +144,11 @@ public partial class MainWindow : Window
             if (AppConfig.AutoGenerateFileName)
             {
                 outputFileName = GenerateFileName(TextToSpeak);
+
+                if (!string.IsNullOrWhiteSpace(AppConfig.SaveTo))
+                {
+                    outputFileName = System.IO.Path.Combine(AppConfig.SaveTo, outputFileName);
+                }
             }
             else
             {
@@ -148,6 +159,8 @@ public partial class MainWindow : Window
                     CheckPathExists = true,
                     Filter = "WAV File|*.wav",
                 };
+
+                saveFileDialog.FileName = GenerateFileName(TextToSpeak);
 
                 var dialogResult = saveFileDialog.ShowDialog();
                 if (dialogResult is null || !dialogResult.Value)
@@ -220,6 +233,21 @@ public partial class MainWindow : Window
         catch (Exception ex)
         {
             MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+    }
+
+    [RelayCommand]
+    public void ExploreOutputFolder()
+    {
+        OpenFolderDialog openFolderDialog = new OpenFolderDialog()
+        {
+            Multiselect = false,
+            FolderName = AppConfig.SaveTo,
+        };
+
+        if (openFolderDialog.ShowDialog() ?? false)
+        {
+            AppConfig.SaveTo = openFolderDialog.FolderName;
         }
     }
 

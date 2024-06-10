@@ -30,6 +30,7 @@
         <ws:ScrollViewer ws:StylusTouchDevice.Simulate="True">
             <ws:StackPanel Margin="28 12 28 28" Spacing="8">
                 <ws:TextBox Text="{Binding TextToSpeak}"
+                            TextWrapping="Wrap"
                             FontSize="14"
                             AcceptsReturn="True"
                             MinHeight="100"
@@ -75,6 +76,16 @@
                                            Command="{Binding GetVoicesCommand}"/>
                             </ws:FlexPanel>
                         </ws:StackPanel>
+
+                        <StackPanel>
+                            <TextBlock Text="Save to:"/>
+                            <ws:FlexPanel MainSpacing="4">
+                                <ws:TextBox ws:FlexPanel.Grow="1"
+                                            Text="{Binding AppConfig.SaveTo}"/>
+                                <ws:Button Content="Explore"
+                                           Command="{Binding ExploreOutputFolderCommand}"/>
+                            </ws:FlexPanel>
+                        </StackPanel>
 
                         <ws:CheckBox Content="Auto generate file name"
                                      IsChecked="{Binding AppConfig.AutoGenerateFileName}"/>
